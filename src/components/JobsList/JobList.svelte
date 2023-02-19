@@ -5,7 +5,7 @@
 	import JobCard from '../JobCard/JobCard.svelte';
 	let data;
 
-	const uri = 'https://api.samuelgraham.dev/whoishiring/jobs';
+	const uri = 'http://0.0.0.0:3001/whoishiring/jobs';
 
 	const fetchJobPosts = async () => {
 		try {
@@ -33,4 +33,9 @@
 </div>
 
 <style>
+	.job-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		gap: 20px;
+	}
 </style>

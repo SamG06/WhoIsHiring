@@ -17,7 +17,8 @@ const trimmer = (s: string) => s.toLocaleLowerCase().trim()
 export const filtered = derived(
     [jobs, searchQuery],
     ([$jobs, $searchQuery]) => {
-        return $jobs.filter(job => trimmer(job.content).includes(trimmer($searchQuery)))
+        const trimmedQuery = trimmer($searchQuery);
+        return $jobs.filter(job => trimmer(job.content).includes(trimmedQuery) || trimmer(job.title).includes(trimmedQuery))
     }
 )
 

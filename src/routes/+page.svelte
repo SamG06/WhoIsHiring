@@ -1,6 +1,6 @@
 <script>
-	import JobCard from '../components/JobCard/JobCard.svelte';
 	import JobList from '../components/JobsList/JobList.svelte';
+	import { filtered } from '../stores/store';
 	const hackerLink = 'https://news.ycombinator.com/submitted?id=whoishiring';
 </script>
 
@@ -16,6 +16,7 @@
 			<div class="header-lower">
 				<h2>February Jobs</h2>
 				<p>(updated: Today 23 minutes ago...)</p>
+				<p>{$filtered.length} Jobs Displayed</p>
 			</div>
 		</div>
 	</header>
