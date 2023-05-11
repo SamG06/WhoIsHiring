@@ -1,6 +1,11 @@
 <script>
+	import { formatDistance } from 'date-fns';
 	import JobList from '../components/JobsList/JobList.svelte';
-	import { filtered } from '../stores/store';
+	import { savedJobs } from '../stores/saved';
+	import { filtered, metaData } from '../stores/store';
+
+	let y = 0;
+
 	const hackerLink = 'https://news.ycombinator.com/submitted?id=whoishiring';
 </script>
 
@@ -12,12 +17,25 @@
 				Organizing all the job posting from
 				<a href={hackerLink} target="_blank" rel="noopener noreferrer">hackernews</a>
 			</p>
-			<hr />
-			<div class="header-lower">
+			<div>
+				{#if $metaData.month}
+					{$metaData.month} - Updated {formatDistance(
+						new Date($metaData.date_updated),
+						new Date(),
+						{
+							addSuffix: true
+						}
+					)}
+				{/if}
+			</div>
+			<!-- <div class="header-lower">
 				<h2>February Jobs</h2>
 				<p>(updated: Today 23 minutes ago...)</p>
-				<p>{$filtered.length} Jobs Displayed</p>
-			</div>
+				<div style="display:flex;gap:5px">
+					<p>{$filtered.length} Jobs Displayed</p>
+					<p>{$savedJobs.length} Jobs Saved</p>
+				</div>
+			</div> -->
 		</div>
 	</header>
 
@@ -25,6 +43,7 @@
 		<JobList />
 	</div>
 </div>
+<svelte:window bind:scrollY={y} />
 
 <style>
 	.main-container {
@@ -32,6 +51,7 @@
 		flex-flow: column;
 		align-items: center;
 		width: 100%;
+		background-color: #2e3440;
 	}
 	.content {
 		display: flex;
@@ -40,16 +60,14 @@
 		width: 95%;
 		max-width: 1300px;
 	}
-
 	h1 {
-		font-weight: 200;
-		font-size: 1.5em;
+		font-weight: 500;
+		font-size: 3em;
 	}
 
 	.header-align-top {
-		text-align: left;
+		text-align: center;
 		margin-left: 10px;
-		align-self: flex-start;
 	}
 
 	p.header-align-top {
@@ -62,9 +80,8 @@
 	header {
 		display: flex;
 		flex-flow: column;
-		background-color: rgb(22, 82, 154);
+		background-color: #2e3440;
 		color: white;
-		height: 30vh;
 		width: 100%;
 		text-align: center;
 		font-weight: 100;

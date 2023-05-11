@@ -1,7 +1,11 @@
 @import '../node_modules/modern-normalize/modern-normalize.css';
 
+html{
+    background-color: #2e3440;
+}
 button{
     border: none;
     padding: 10px;
     cursor: pointer;
+    user-select: none;
 }

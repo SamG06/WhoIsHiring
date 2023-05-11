@@ -4,12 +4,30 @@ import { writable, type Writable } from "svelte/store";
 
 import type { JobPost } from "./store";
 
-const saved = browser ? localStorage?.savedJobs ? JSON.parse(localStorage.savedJobs) : [] : []
+const defaultListObj = {considering: {}}
+const saved = browser ? localStorage?.savedJobs ? JSON.parse(localStorage.savedJobs) : defaultListObj : defaultListObj
 
-export const savedJobs: Writable<JobPost[]> = writable(saved || [])
+const sorting = 'date'
+
+interface JobRecord extends JobPost {
+    dateAdded: number,
+}
+
+type ListType = {
+    [key: string]:JobRecord;
+}
+
+type SavedJobs = {
+    considering: ListType
+    applied: ListType
+    rejected: ListType
+    offer: ListType
+}
+
+export const savedJobs: Writable<SavedJobs> = writable(saved || {})
 
 savedJobs.subscribe((value) => {
     if(browser){
-        localStorage.savedJobs = JSON.stringify(value)
+            localStorage.savedJobs = JSON.stringify(value)
     }
 })
